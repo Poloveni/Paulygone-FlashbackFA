@@ -1,15 +1,15 @@
-# Digital Prisme
+# Prisme Digital
 
 **Studio web — sites vitrines, espaces membres et outils de gestion.**
 Los Santos, San Andreas.
 
-🔗 **Site en ligne :** https://poloveni.github.io/Digital-Prisme-FlashbackFA/
+🔗 **Site en ligne :** https://poloveni.github.io/Prisme-Digital-FlashbackFA/
 
 ---
 
 ## À propos du projet
 
-Ce dépôt contient l'intégralité du code source du site vitrine de Digital Prisme, entreprise de développement web opérant sur le serveur FlashbackFA. Il est public et le restera : la transparence sur le code fait partie des engagements pris auprès de FlashbackFA et de chaque client.
+Ce dépôt contient l'intégralité du code source du site vitrine de Prisme Digital, entreprise de développement web opérant sur le serveur FlashbackFA. Il est public et le restera : la transparence sur le code fait partie des engagements pris auprès de FlashbackFA et de chaque client.
 
 ### Contenu du site
 
@@ -60,7 +60,7 @@ Aucune. Le site fonctionne en ouvrant `index.html` dans un navigateur.
 Pour un hébergement, il suffit de déposer `index.html` à la racine du serveur web.
 
 ```
-Digital-Prisme-FlashbackFA/
+Prisme-Digital-FlashbackFA/
 ├── index.html    ← le site complet
 └── README.md
 ```
@@ -71,7 +71,7 @@ Digital-Prisme-FlashbackFA/
 
 | Élément | Valeur |
 |---|---|
-| Nom | Digital Prisme |
+| Nom | Prisme Digital |
 | Signature | Studio web |
 | Fondateur | Javier Silva |
 | Couleur principale | `#F23BA0` (magenta) |
