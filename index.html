@@ -329,10 +329,16 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
   .disc{padding:32px 26px}
   .f-nav{gap:28px}
 }
+/* Le visiteur a demandé moins d'animations (réglage du système).
+   On supprime tout ce qui bouge, on garde les fondus : c'est le
+   déplacement qui gêne, pas le changement d'opacité. */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .rev{opacity:1;transform:none}
+  *,*::before,*::after{animation:none!important}
+  .rev{transform:none;transition:opacity .55s ease}
+  .btn:hover,.card:hover{transform:none}
+  .nav-links a::after{transition:none}
+  #toast{transition:none}
 }
 </style>
 </head>
@@ -722,7 +728,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var SP = [[242,59,160],[228,68,190],[196,84,216],[150,106,232],[96,146,240],[54,184,240],[37,213,236]];
-    var W = 0, H = 0, dpr = 1, t = 0, raf = null, alive = true;
+    var W = 0, H = 0, dpr = 1, t = 0, last = 0, raf = null, alive = true;
     var facets = [], dust = [];
 
     function rnd(a,b){ return a + Math.random()*(b-a); }
@@ -734,15 +740,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       for(var i=0;i<nf;i++){
         facets.push({
           x:rnd(0,W), y:rnd(0,H), r:rnd(20,66),
-          a:rnd(0,6.28), sp:rnd(-0.0018,0.0018),
-          vx:rnd(-0.10,0.10), vy:rnd(-0.08,0.08),
+          a:rnd(0,6.28), sp:rnd(-0.10,0.10),
+          vx:rnd(-7,7), vy:rnd(-5,5),
           n:(Math.random()<0.55?3:4), o:rnd(0.04,0.11),
           c:(Math.random()<0.5?[242,59,160]:[37,213,236])
         });
       }
       for(var j=0;j<nd;j++){
         dust.push({ x:rnd(0,W), y:rnd(0,H), r:rnd(0.6,1.9),
-          vx:rnd(-0.06,0.06), vy:rnd(-0.18,-0.03), o:rnd(0.14,0.55), ph:rnd(0,6.28) });
+          vx:rnd(-4,4), vy:rnd(-16,-3), o:rnd(0.14,0.55), ph:rnd(0,6.28) });
       }
     }
 
@@ -771,6 +777,23 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x2,y2); ctx.stroke();
     }
 
+    /* une tache brillante qui parcourt la bande, centrée à la
+       fraction f de sa longueur. C'est elle qu'on voit bouger. */
+    function pulse(x,y,ang,len,wid,col,alpha,f,spread){
+      var cx = x + Math.cos(ang)*len*f, cy = y + Math.sin(ang)*len*f;
+      var h  = len*spread*0.5;
+      var x1 = cx - Math.cos(ang)*h, y1 = cy - Math.sin(ang)*h;
+      var x2 = cx + Math.cos(ang)*h, y2 = cy + Math.sin(ang)*h;
+      var g = ctx.createLinearGradient(x1,y1,x2,y2);
+      var c = 'rgba('+col[0]+','+col[1]+','+col[2]+',';
+      g.addColorStop(0, c+'0)');
+      g.addColorStop(0.5, c+alpha+')');
+      g.addColorStop(1, c+'0)');
+      ctx.strokeStyle = g; ctx.lineWidth = wid; ctx.lineCap = 'butt';
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+
+    var dt = 0;
     function draw(){
       if(!W || !H) return;
       ctx.clearRect(0,0,W,H);
@@ -780,7 +803,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       for(var i=0;i<facets.length;i++){
         var f = facets[i];
         if(!reduce){
-          f.a += f.sp; f.x += f.vx; f.y += f.vy;
+          f.a += f.sp*dt; f.x += f.vx*dt; f.y += f.vy*dt;
           if(f.x < -140) f.x = W+140; else if(f.x > W+140) f.x = -140;
           if(f.y < -140) f.y = H+140; else if(f.y > H+140) f.y = -140;
         }
@@ -800,8 +823,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
          se décompose en bandes diagonales sur toute la largeur */
       var px = W*0.03, py = -H*0.12;
       var base = Math.atan2(H*1.05 - py, W*0.80 - px);
+      if(!reduce) base += 0.052*Math.sin(t*0.26);      /* l'éventail balaie */
       var len  = 1.9 * Math.sqrt(W*W + H*H);
-      var puls = reduce ? 1 : (0.80 + 0.20*Math.sin(t*0.55));
+      var puls = reduce ? 1 : (0.74 + 0.26*Math.sin(t*1.15));
       /* sur écran étroit le faisceau passe derrière le texte : on l'atténue */
       var k = W < 760 ? 0.55 : 1;
 
@@ -809,12 +833,25 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       band(px, py, base - 0.235, len, 2.5, [240,245,255], 0.20*puls*k, 0.30);
       band(px, py, base - 0.235, len, 34,  [214,226,255], 0.055*puls*k, 0.32);
 
+      /* l'écart entre les couleurs s'ouvre et se referme */
+      var disp = reduce ? 0.46 : (0.46 + 0.10*Math.sin(t*0.42));
+
       for(var r=0;r<SP.length;r++){
         var fr  = r/(SP.length-1);
-        var ang = base - 0.18 + fr*0.46;
-        var osc = reduce ? 1 : (0.62 + 0.38*Math.sin(t*0.5 + r*0.7));
-        band(px, py, ang, len, 30 + fr*22, SP[r], 0.105*osc*k, 0.30 + fr*0.09);
-        band(px, py, ang, len, 2,          SP[r], 0.26*osc*k,  0.33 + fr*0.09);
+        var ang = base - disp*0.39 + fr*disp;
+        var osc = reduce ? 1 : (0.52 + 0.48*Math.sin(t*0.95 + r*0.8));
+        band(px, py, ang, len, 30 + fr*22, SP[r], 0.10*osc*k, 0.30 + fr*0.09);
+        band(px, py, ang, len, 2,          SP[r], 0.24*osc*k, 0.33 + fr*0.09);
+
+        /* l'impulsion : elle descend le faisceau, décalée d'une
+           couleur à l'autre, ce qui fait cascader le spectre */
+        if(!reduce){
+          var f = ((t*0.20 + r*0.075) % 0.86) - 0.06;
+          if(f > -0.02){
+            pulse(px, py, ang, len, 30 + fr*20, SP[r], 0.19*k, f, 0.11);
+            pulse(px, py, ang, len, 3,          SP[r], 0.42*k, f, 0.09);
+          }
+        }
       }
 
       /* halo au point d'entrée, côté prisme */
@@ -830,11 +867,11 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       for(var d=0;d<dust.length;d++){
         var pt = dust[d];
         if(!reduce){
-          pt.x += pt.vx; pt.y += pt.vy;
+          pt.x += pt.vx*dt; pt.y += pt.vy*dt;
           if(pt.y < -10){ pt.y = H+10; pt.x = Math.random()*W; }
           if(pt.x < -10) pt.x = W+10; else if(pt.x > W+10) pt.x = -10;
         }
-        var tw = reduce ? 1 : (0.55 + 0.45*Math.sin(t*1.6 + pt.ph));
+        var tw = reduce ? 1 : (0.45 + 0.55*Math.sin(t*2.6 + pt.ph));
         ctx.fillStyle = 'rgba(215,230,255,'+(pt.o*tw)+')';
         ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.r,0,6.283185); ctx.fill();
       }
@@ -842,12 +879,15 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
       ctx.globalCompositeOperation = 'source-over';
     }
 
-    function loop(){
-      t += 0.016;
+    function loop(now){
+      if(!last) last = now;
+      dt = Math.min((now - last)/1000, 0.05);      /* secondes, borné */
+      last = now;
+      t += dt;
       draw();
       raf = requestAnimationFrame(loop);
     }
-    function start(){ if(!raf && alive && !reduce) raf = requestAnimationFrame(loop); }
+    function start(){ if(!raf && alive && !reduce){ last = 0; raf = requestAnimationFrame(loop); } }
     function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
 
     size(); draw();
