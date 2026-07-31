@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paulygone — Création de sites internet à Los Santos</title>
+<meta name="description" content="Paulygone conçoit des sites vitrines, espaces membres et outils de gestion pour les entreprises de Los Santos. Devis en 24 h, délais annoncés et tenus, suivi après livraison.">
+<meta name="theme-color" content="#07080C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Paulygone — Création de sites internet à Los Santos">
+<meta property="og:description" content="Sites vitrines, espaces membres et outils de gestion. Devis en 24 h, délais tenus, suivi après livraison.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='32,4 58,19 58,45 32,60 6,45 6,19' fill='none' stroke='%237C5CFF' stroke-width='5'/%3E%3Cpolygon points='32,20 45,27 45,41 32,48 19,41 19,27' fill='%2300E5A0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PAULYGONE — feuille de style unique
+   1. Variables      2. Base       3. Composants
+   4. Sections       5. Responsive 6. Animations
+   ============================================================ */
+
+/* ---------- 1. Variables ---------- */
+:root{
+  --bg:#07080C;
+  --bg-soft:#0B0D13;
+  --surface:#11141C;
+  --surface-2:#161A24;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(255,255,255,.16);
+  --text:#EDEFF5;
+  --muted:#98A2B3;
+  --violet:#7C5CFF;
+  --violet-soft:rgba(124,92,255,.14);
+  --mint:#00E5A0;
+  --mint-soft:rgba(0,229,160,.12);
+  --amber:#FFB020;
+  --grad:linear-gradient(120deg,#7C5CFF 0%,#00E5A0 100%);
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  --maxw:1180px;
+  --font-title:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+
+/* ---------- 2. Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:var(--font-title);line-height:1.15;margin:0 0 .5em;letter-spacing:-.02em;font-weight:700}
+h1{font-size:clamp(2.2rem,6vw,4rem)}
+h2{font-size:clamp(1.75rem,4vw,2.75rem)}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0 0 1rem}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+ul{margin:0;padding:0;list-style:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:6px}
+::selection{background:var(--violet);color:#fff}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.muted{color:var(--muted)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.center{text-align:center}
+.skip{position:absolute;left:-9999px;top:0;background:var(--violet);color:#fff;padding:12px 18px;z-index:999;border-radius:0 0 8px 0}
+.skip:focus{left:0}
+
+/* ---------- 3. Composants ---------- */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mint);background:var(--mint-soft);
+  border:1px solid rgba(0,229,160,.22);border-radius:999px;padding:6px 14px;margin-bottom:20px;
+}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 26px;border-radius:999px;font-weight:600;font-size:.95rem;
+  border:1px solid transparent;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--grad);color:#06070A;box-shadow:0 10px 30px -10px rgba(124,92,255,.7)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 38px -10px rgba(124,92,255,.85)}
+.btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line-strong);color:var(--text)}
+.btn-ghost:hover{background:rgba(255,255,255,.09);transform:translateY(-2px)}
+.btn-sm{padding:10px 18px;font-size:.88rem}
+
+.card{
+  background:linear-gradient(180deg,var(--surface) 0%,var(--bg-soft) 100%);
+  border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+  position:relative;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.card:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:var(--shadow)}
+
+.ico{
+  width:46px;height:46px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
+  background:var(--violet-soft);border:1px solid rgba(124,92,255,.28);color:var(--violet);
+}
+.ico svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ico.mint{background:var(--mint-soft);border-color:rgba(0,229,160,.28);color:var(--mint)}
+
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+
+section{padding:100px 0;position:relative}
+.sec-head{max-width:720px;margin-bottom:52px}
+.sec-head.center{margin-left:auto;margin-right:auto}
+.sec-head p{color:var(--muted);font-size:1.06rem;margin:0}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent)}
+
+/* ---------- 4. Header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .3s ease,border-color .3s ease,backdrop-filter .3s ease;
+  border-bottom:1px solid transparent;
+}
+header.scrolled{background:rgba(7,8,12,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;font-family:var(--font-title);font-weight:700;font-size:1.18rem;letter-spacing:-.02em}
+.logo svg{width:32px;height:32px;flex:none}
+.logo span small{display:block;font-family:var(--font-body);font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:-2px}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links a{padding:9px 14px;border-radius:999px;font-size:.92rem;font-weight:500;color:var(--muted);transition:color .2s,background .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.burger{display:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer}
+.burger span{display:block;width:18px;height:2px;background:var(--text);position:relative;transition:.25s}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--text);transition:.25s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.burger.open span{background:transparent}
+.burger.open span::before{top:0;transform:rotate(45deg)}
+.burger.open span::after{top:0;transform:rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;inset:74px 0 auto 0;background:rgba(7,8,12,.98);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);padding:18px 24px 30px;display:none;z-index:99;
+}
+.mobile-menu.open{display:block;animation:slideDown .25s ease}
+.mobile-menu a{display:block;padding:14px 4px;font-size:1.02rem;font-weight:500;border-bottom:1px solid var(--line);color:var(--muted)}
+.mobile-menu a:last-of-type{border-bottom:none}
+.mobile-menu .btn{width:100%;margin-top:16px}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+/* ---------- 5. Hero ---------- */
+#hero{padding:150px 0 90px;min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+#bgCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.55}
+.hero-glow{
+  position:absolute;width:820px;height:820px;border-radius:50%;z-index:0;pointer-events:none;
+  background:radial-gradient(circle,rgba(124,92,255,.18) 0%,transparent 65%);
+  top:-260px;right:-200px;filter:blur(30px);
+}
+.hero-glow.two{background:radial-gradient(circle,rgba(0,229,160,.13) 0%,transparent 65%);top:auto;bottom:-380px;left:-260px;right:auto}
+#hero .wrap{position:relative;z-index:2}
+.hero-inner{max-width:860px}
+.hero-inner h1{margin-bottom:22px}
+.hero-sub{font-size:clamp(1.02rem,2vw,1.22rem);color:var(--muted);max-width:640px;margin-bottom:34px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:56px}
+.hero-note{display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:var(--muted);margin-top:-42px;margin-bottom:52px}
+.hero-note svg{width:15px;height:15px;flex:none;margin-top:5px;stroke:var(--mint);fill:none;stroke-width:2}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.kpi{background:rgba(11,13,19,.72);backdrop-filter:blur(8px);padding:24px 22px}
+.kpi b{display:block;font-family:var(--font-title);font-size:clamp(1.6rem,3.2vw,2.1rem);font-weight:700;line-height:1;margin-bottom:8px}
+.kpi small{color:var(--muted);font-size:.82rem;line-height:1.4;display:block}
+
+/* ---------- 6. Comparatif / promesses ---------- */
+.promise{display:flex;gap:16px;align-items:flex-start}
+.promise .ico{margin-bottom:0}
+.promise h3{margin-bottom:6px}
+.promise p{color:var(--muted);font-size:.94rem;margin:0}
+
+/* ---------- 7. Services ---------- */
+.service-card ul{margin-top:16px;display:grid;gap:8px}
+.service-card li{position:relative;padding-left:22px;font-size:.9rem;color:var(--muted)}
+.service-card li::before{
+  content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;
+  background:var(--mint);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+.service-card p{color:var(--muted);font-size:.94rem;margin:0}
+.tag{
+  position:absolute;top:22px;right:22px;font-size:.68rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 10px;border-radius:999px;
+  background:var(--violet-soft);color:var(--violet);border:1px solid rgba(124,92,255,.3);
+}
+
+/* ---------- 8. Réalisations ---------- */
+.work{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+}
+.work-txt{padding:40px}
+.work-txt h3{font-size:1.5rem;margin-bottom:6px}
+.work-role{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mint);font-weight:600;margin-bottom:18px}
+.work-txt p{color:var(--muted);font-size:.95rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-size:.78rem;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted)}
+.work-visual{
+  background:
+    radial-gradient(circle at 30% 20%,rgba(124,92,255,.22),transparent 60%),
+    radial-gradient(circle at 80% 80%,rgba(0,229,160,.16),transparent 60%),
+    var(--bg-soft);
+  display:grid;place-items:center;padding:34px;position:relative;border-left:1px solid var(--line);
+}
+.mock{width:100%;max-width:400px;border-radius:12px;border:1px solid var(--line-strong);overflow:hidden;background:#0A0C11;box-shadow:var(--shadow)}
+.mock-bar{display:flex;align-items:center;gap:6px;padding:10px 12px;background:#12151D;border-bottom:1px solid var(--line)}
+.mock-bar i{width:9px;height:9px;border-radius:50%;background:#3A4152;display:block}
+.mock-bar u{flex:1;height:16px;border-radius:5px;background:#1B2030;margin-left:8px;text-decoration:none}
+.mock-body{padding:16px;display:grid;gap:10px}
+.mock-row{height:9px;border-radius:5px;background:#1A1F2C}
+.mock-row.w70{width:70%}.mock-row.w45{width:45%}.mock-row.accent{background:linear-gradient(90deg,var(--violet),transparent)}
+.mock-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:4px}
+.mock-tile{height:44px;border-radius:8px;background:#151A26;border:1px solid rgba(255,255,255,.05)}
+.mock-tile:first-child{background:linear-gradient(140deg,rgba(124,92,255,.35),rgba(0,229,160,.12))}
+
+.soon{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:22px}
+.soon .card{display:flex;align-items:center;gap:16px;padding:22px}
+.soon h4{margin:0 0 2px;font-family:var(--font-title);font-size:1rem}
+.soon p{margin:0;font-size:.86rem;color:var(--muted)}
+.dot-pending{width:10px;height:10px;border-radius:50%;background:var(--amber);flex:none;box-shadow:0 0 12px rgba(255,176,32,.6)}
+
+/* ---------- 9. Méthode ---------- */
+.steps{position:relative;display:grid;gap:0}
+.step{display:grid;grid-template-columns:78px 1fr;gap:22px;padding-bottom:38px;position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{
+  content:"";position:absolute;left:26px;top:56px;bottom:-4px;width:1px;
+  background:linear-gradient(180deg,var(--line-strong),transparent);
+}
+.step:last-child::before{display:none}
+.step-num{
+  width:54px;height:54px;display:grid;place-items:center;font-family:var(--font-title);font-weight:700;
+  background:var(--surface);border:1px solid var(--line-strong);color:var(--text);
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
+}
+.step:nth-child(odd) .step-num{background:var(--grad);color:#06070A;border:none}
+.step-body h3{margin-bottom:6px}
+.step-body p{color:var(--muted);font-size:.94rem;margin:0}
+.step-meta{display:inline-block;margin-top:10px;font-size:.78rem;color:var(--mint);background:var(--mint-soft);padding:4px 11px;border-radius:999px;border:1px solid rgba(0,229,160,.2)}
+
+/* ---------- 10. Tarifs ---------- */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.price{display:flex;flex-direction:column}
+.price.featured{border-color:rgba(124,92,255,.45);background:linear-gradient(180deg,rgba(124,92,255,.09),var(--bg-soft))}
+.price h3{font-size:1.05rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.price .amount{font-family:var(--font-title);font-size:2.1rem;font-weight:700;line-height:1;margin:6px 0 4px}
+.price .amount small{font-size:.85rem;font-weight:500;color:var(--muted);font-family:var(--font-body)}
+.price .delay{font-size:.86rem;color:var(--mint);margin-bottom:18px}
+.price ul{display:grid;gap:10px;margin:18px 0 26px;flex:1}
+.price li{display:flex;gap:10px;font-size:.9rem;color:var(--muted);align-items:flex-start}
+.price li svg{width:16px;height:16px;flex:none;margin-top:4px;stroke:var(--mint);fill:none;stroke-width:2.4}
+.price .btn{width:100%}
+.badge-best{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--grad);color:#06070A;font-size:.7rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:5px 14px;border-radius:999px;white-space:nowrap;
+}
+.price-note{margin-top:26px;font-size:.86rem;color:var(--muted);text-align:center}
+
+/* ---------- 11. Simulateur ---------- */
+#devis{background:
+  radial-gradient(ellipse at 50% 0%,rgba(124,92,255,.10),transparent 60%),
+  var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sim{display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:start}
+.sim-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.field{margin-bottom:26px}
+.field:last-child{margin-bottom:0}
+.field > label,.field-label{display:block;font-weight:600;font-size:.95rem;margin-bottom:12px}
+.field-hint{font-size:.82rem;color:var(--muted);font-weight:400;margin-left:6px}
+
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:0;height:0}
+.opt label{
+  display:block;padding:16px 14px;border-radius:var(--radius-sm);cursor:pointer;height:100%;
+  background:var(--surface-2);border:1px solid var(--line);transition:.2s;
+}
+.opt label b{display:block;font-family:var(--font-title);font-size:.95rem;margin-bottom:3px}
+.opt label span{font-size:.78rem;color:var(--muted);display:block;line-height:1.4}
+.opt label:hover{border-color:var(--line-strong)}
+.opt input:checked + label{border-color:var(--violet);background:rgba(124,92,255,.13);box-shadow:0 0 0 1px var(--violet) inset}
+.opt input:focus-visible + label{outline:2px solid var(--mint);outline-offset:2px}
+
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.check{display:flex;align-items:flex-start;gap:11px;padding:14px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--line);cursor:pointer;transition:.2s}
+.check:hover{border-color:var(--line-strong)}
+.check.on{border-color:var(--mint);background:rgba(0,229,160,.09)}
+.check input{width:18px;height:18px;accent-color:var(--mint);flex:none;margin-top:2px;cursor:pointer}
+.check .txt b{display:block;font-size:.9rem;font-weight:600}
+.check .txt span{font-size:.78rem;color:var(--muted)}
+
+.sim-result{position:sticky;top:100px;background:linear-gradient(180deg,rgba(124,92,255,.10),var(--surface));border:1px solid rgba(124,92,255,.3);border-radius:var(--radius);padding:30px}
+.sim-result .lab{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sim-total{font-family:var(--font-title);font-size:1.75rem;font-weight:700;line-height:1.15;margin:8px 0 4px}
+.sim-delay{color:var(--mint);font-size:.92rem;margin-bottom:20px}
+.sim-lines{border-top:1px solid var(--line);padding-top:16px;margin-bottom:22px;display:grid;gap:8px;max-height:230px;overflow-y:auto}
+.sim-line{display:flex;justify-content:space-between;gap:12px;font-size:.85rem;color:var(--muted)}
+.sim-line b{color:var(--text);font-weight:600;white-space:nowrap}
+.sim-result .btn{width:100%;margin-bottom:10px}
+.sim-disclaimer{font-size:.76rem;color:var(--muted);margin:14px 0 0;line-height:1.5}
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:200;
+  background:var(--mint);color:#06070A;font-weight:600;font-size:.9rem;padding:12px 22px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:.25s;box-shadow:0 10px 30px -8px rgba(0,229,160,.6);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- 12. Engagements ---------- */
+.pledges{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pledge{display:flex;gap:14px;padding:20px;border-radius:var(--radius-sm);background:var(--surface);border:1px solid var(--line)}
+.pledge svg{width:20px;height:20px;flex:none;margin-top:3px;stroke:var(--mint);fill:none;stroke-width:2}
+.pledge b{display:block;font-size:.95rem;margin-bottom:3px}
+.pledge span{font-size:.86rem;color:var(--muted)}
+
+/* ---------- 13. FAQ ---------- */
+.faq{display:grid;gap:12px;max-width:820px;margin:0 auto}
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
+.qa button{
+  width:100%;text-align:left;background:none;border:none;padding:20px 22px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;font-weight:600;font-size:.98rem;
+}
+.qa button:hover{background:rgba(255,255,255,.03)}
+.qa .plus{width:20px;height:20px;flex:none;position:relative;transition:transform .25s}
+.qa .plus::before,.qa .plus::after{content:"";position:absolute;background:var(--mint);border-radius:2px}
+.qa .plus::before{top:9px;left:2px;width:16px;height:2px}
+.qa .plus::after{left:9px;top:2px;width:2px;height:16px;transition:opacity .25s}
+.qa.open .plus{transform:rotate(180deg)}
+.qa.open .plus::after{opacity:0}
+.qa .ans{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.qa .ans p{padding:0 22px 20px;margin:0;color:var(--muted);font-size:.93rem}
+
+/* ---------- 14. Contact ---------- */
+#contact{background:radial-gradient(ellipse at 50% 100%,rgba(0,229,160,.08),transparent 60%)}
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;align-items:start}
+.contact-info .card{margin-bottom:14px;padding:22px;display:flex;gap:14px;align-items:flex-start}
+.contact-info .card:hover{transform:none}
+.contact-info b{display:block;font-size:.95rem}
+.contact-info span{font-size:.88rem;color:var(--muted)}
+.form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form label{display:block;font-size:.85rem;font-weight:600;margin:0 0 7px}
+.form input,.form select,.form textarea{
+  width:100%;padding:13px 15px;border-radius:var(--radius-sm);background:var(--surface-2);
+  border:1px solid var(--line);color:var(--text);transition:border-color .2s,background .2s;font-size:.94rem;
+}
+.form input::placeholder,.form textarea::placeholder{color:#5C6577}
+.form input:focus,.form select:focus,.form textarea:focus{border-color:var(--violet);background:#181C27;outline:none}
+.form .fgroup{margin-bottom:16px}
+.form textarea{resize:vertical;min-height:110px;font-family:inherit}
+.form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2398A2B3' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:42px}
+#msgOut{display:none;margin-top:18px}
+#msgOut.show{display:block;animation:slideDown .25s ease}
+#msgPreview{min-height:190px;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:.82rem;line-height:1.6}
+
+/* ---------- 15. Footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--bg-soft);padding:56px 0 30px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;margin-bottom:38px}
+.foot-grid p{color:var(--muted);font-size:.9rem;max-width:320px;margin-top:14px}
+.foot-grid h4{font-family:var(--font-body);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.foot-grid li{margin-bottom:9px}
+.foot-grid li a{font-size:.9rem;color:var(--muted);transition:color .2s}
+.foot-grid li a:hover{color:var(--text)}
+.foot-bot{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.rp-note{background:rgba(255,176,32,.07);border:1px solid rgba(255,176,32,.22);border-radius:var(--radius-sm);padding:14px 18px;font-size:.82rem;color:#D6C09A;margin-bottom:34px}
+
+/* ---------- 16. Animations ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* ---------- 17. Responsive ---------- */
+@media(max-width:980px){
+  .nav-links{display:none}
+  .nav-cta .btn{display:none}
+  .burger{display:flex}
+  .g3,.price-grid,.opts{grid-template-columns:1fr 1fr}
+  .sim,.work,.contact-grid{grid-template-columns:1fr}
+  .work-visual{border-left:none;border-top:1px solid var(--line)}
+  .sim-result{position:static}
+  .kpis{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  section{padding:72px 0}
+  #hero{padding:120px 0 70px;min-height:auto}
+  .g2,.g3,.price-grid,.opts,.checks,.pledges,.soon,.form .row,.foot-grid{grid-template-columns:1fr}
+  .work-txt,.sim-panel,.form,.sim-result{padding:24px}
+  .hero-actions .btn{width:100%}
+  .hero-note{margin-top:-32px}
+  .step{grid-template-columns:56px 1fr;gap:16px}
+  .step-num{width:44px;height:44px;font-size:.9rem}
+  .step::before{left:21px;top:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  #bgCanvas{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu principal</a>
+
+<!-- ============ HEADER ============ -->
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#hero" class="logo" aria-label="Paulygone, accueil">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7C5CFF"/><stop offset="100%" stop-color="#00E5A0"/>
+        </linearGradient></defs>
+        <polygon points="32,3 58,18 58,46 32,61 6,46 6,18" fill="none" stroke="url(#lg)" stroke-width="4"/>
+        <polygon points="32,19 45,26.5 45,41.5 32,49 19,41.5 19,26.5" fill="url(#lg)"/>
+      </svg>
+      <span>Paulygone<small>Web &amp; Systèmes</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="#services">Services</a>
+      <a href="#realisations">Réalisations</a>
+      <a href="#methode">Méthode</a>
+      <a href="#formules">Formules</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#devis" class="btn btn-primary btn-sm">Demander un devis</a>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services">Services</a>
+  <a href="#realisations">Réalisations</a>
+  <a href="#methode">Méthode</a>
+  <a href="#formules">Formules</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+  <a href="#devis" class="btn btn-primary">Définir mon projet</a>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-glow two" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow reveal">Los Santos · San Andreas · Disponible</span>
+      <h1 class="reveal d1">Votre site, <span class="grad-text">livré à la date promise.</span></h1>
+      <p class="hero-sub reveal d1">
+        Paulygone conçoit les sites vitrines, espaces membres et outils de gestion des entreprises
+        de Los Santos. Devis détaillé sous 24 h, maquette avant la première ligne de code,
+        et un délai annoncé qui est tenu — pas « quand ce sera prêt ».
+      </p>
+      <div class="hero-actions reveal d2">
+        <a href="#devis" class="btn btn-primary">
+          Définir mon projet en 1 min
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#realisations" class="btn btn-ghost">Voir une réalisation</a>
+      </div>
+      <p class="hero-note reveal d2">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+        Aucun acompte tant que la maquette n'est pas validée.
+      </p>
+
+      <div class="kpis reveal d3">
+        <div class="kpi"><b class="count" data-to="24" data-suffix=" h">0 h</b><small>Pour recevoir votre devis après le brief</small></div>
+        <div class="kpi"><b class="count" data-to="20" data-suffix=" h">0 h</b><small>De disponibilité garantie par semaine</small></div>
+        <div class="kpi"><b class="count" data-to="30" data-suffix=" j">0 j</b><small>De corrections incluses après livraison</small></div>
+        <div class="kpi"><b class="count" data-to="100" data-suffix=" %">0 %</b><small>Code source remis au client</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROMESSES ============ -->
+<section id="pourquoi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Pourquoi Paulygone</span>
+      <h2>Le web de Los Santos mérite mieux que l'attente.</h2>
+      <p>La demande dépasse aujourd'hui l'offre : les entreprises patientent des semaines pour un simple site vitrine. Paulygone est né pour absorber ce surplus, avec trois règles simples.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card promise reveal">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div><h3>Un délai, pas une estimation</h3><p>La date de livraison est écrite dans le devis. Si elle glisse de mon fait, le mois de maintenance qui suit est offert.</p></div>
+      </div>
+      <div class="card promise reveal d1">
+        <div class="ico mint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div><h3>Devis détaillé, zéro surprise</h3><p>Chaque fonctionnalité est chiffrée ligne par ligne avant le début des travaux. Aucun montant n'est ajouté en cours de route sans votre accord écrit.</p></div>
+      </div>
+      <div class="card promise reveal d2">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <div><h3>Le suivi ne s'arrête pas à la livraison</h3><p>Un site vit : nouveaux employés, nouveaux tarifs, nouvelles pages. Chaque projet inclut 30 jours de corrections gratuites.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Services</span>
+      <h2>Ce que je construis.</h2>
+      <p>Du site de présentation à l'outil interne complet. Chaque brique est développée sur mesure, jamais copiée d'un concurrent.</p>
+    </div>
+    <div class="grid g3">
+
+      <article class="card service-card reveal">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></div>
+        <h3>Site vitrine</h3>
+        <p>La façade publique de votre entreprise : ce que voient vos clients avant de vous appeler.</p>
+        <ul>
+          <li>Page d'accueil, services, équipe, contact</li>
+          <li>Design sur mesure aux couleurs de la boîte</li>
+          <li>Parfaitement lisible sur téléphone</li>
+        </ul>
+      </article>
+
+      <article class="card service-card reveal d1">
+        <span class="tag">Le plus demandé</span>
+        <div class="ico mint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 20v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="9.5" cy="7" r="3.5"/><path d="M19 8v6M22 11h-6"/></svg></div>
+        <h3>Espace membre</h3>
+        <p>La partie privée réservée à vos employés, avec un compte et un mot de passe par personne.</p>
+        <ul>
+          <li>Connexion sécurisée et grades (patron, cadre, employé)</li>
+          <li>Fiches employés, contrats, pointeuse</li>
+          <li>Chacun ne voit que ce qui le concerne</li>
+        </ul>
+      </article>
+
+      <article class="card service-card reveal d2">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
+        <h3>Facturation &amp; devis</h3>
+        <p>Fini le carnet papier : vos factures sont générées, numérotées et archivées automatiquement.</p>
+        <ul>
+          <li>Devis et factures en PDF téléchargeables</li>
+          <li>Suivi payé / en attente / en retard</li>
+          <li>Total du chiffre d'affaires par mois</li>
+        </ul>
+      </article>
+
+      <article class="card service-card reveal">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
+        <h3>Tableau de bord</h3>
+        <p>Toutes les infos importantes de l'entreprise sur un seul écran, mises à jour en direct.</p>
+        <ul>
+          <li>Chiffres clés : ventes, stock, effectifs</li>
+          <li>Graphiques simples et lisibles</li>
+          <li>Export des données quand vous voulez</li>
+        </ul>
+      </article>
+
+      <article class="card service-card reveal d1">
+        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <h3>Formulaires &amp; recrutement</h3>
+        <p>Candidatures, plaintes, réservations : les demandes arrivent classées, plus rien ne se perd.</p>
+        <ul>
+          <li>Formulaire public personnalisé</li>
+          <li>Notification Discord à chaque envoi</li>
+          <li>Suivi accepté / refusé / en attente</li>
+        </ul>
+      </article>
+
+      <article class="card service-card reveal d2">
+        <div class="ico mint" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+        <h3>Maintenance &amp; évolutions</h3>
+        <p>Votre site ne doit pas mourir le jour où le projet se termine. Je reste joignable.</p>
+        <ul>
+          <li>Correction des bugs en priorité</li>
+          <li>Ajout de pages et de fonctionnalités</li>
+          <li>Formule mensuelle sans engagement</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ RÉALISATIONS ============ -->
+<section id="realisations">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Réalisations</span>
+      <h2>Jugez sur pièce.</h2>
+      <p>Pas de portfolio inventé : voici ce qui tourne aujourd'hui, en production, tous les jours.</p>
+    </div>
+
+    <div class="work reveal">
+      <div class="work-txt">
+        <p class="work-role">Site vitrine + espace membre · en production</p>
+        <h3>Oil Roxwood</h3>
+        <p>
+          Développé et maintenu en continu depuis sa création. Le site public présente l'entreprise
+          et ses services, tandis que l'espace membre gère au quotidien l'équipe, les documents
+          internes et la facturation.
+        </p>
+        <p>
+          Le projet évolue en permanence : chaque nouveau besoin de la direction devient une
+          fonctionnalité livrée dans la semaine. C'est exactement la méthode que Paulygone
+          applique désormais à ses clients.
+        </p>
+        <div class="chips">
+          <span class="chip">Vitrine publique</span>
+          <span class="chip">Comptes &amp; grades</span>
+          <span class="chip">Facturation</span>
+          <span class="chip">Gestion interne</span>
+          <span class="chip">Maintenance continue</span>
+        </div>
+      </div>
+      <div class="work-visual" aria-hidden="true">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i><u></u></div>
+          <div class="mock-body">
+            <div class="mock-row w45 accent"></div>
+            <div class="mock-tiles"><div class="mock-tile"></div><div class="mock-tile"></div><div class="mock-tile"></div></div>
+            <div class="mock-row"></div>
+            <div class="mock-row w70"></div>
+            <div class="mock-row w45"></div>
+            <div class="mock-tiles"><div class="mock-tile"></div><div class="mock-tile"></div><div class="mock-tile"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soon">
+      <div class="card reveal d1">
+        <div class="dot-pending" aria-hidden="true"></div>
+        <div><h4>Votre entreprise ici</h4><p>Deux créneaux ouverts pour le mois en cours.</p></div>
+      </div>
+      <div class="card reveal d2">
+        <div class="dot-pending" aria-hidden="true"></div>
+        <div><h4>Collaborations bienvenues</h4><p>Renfort possible sur les grosses commandes d'un confrère.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ MÉTHODE ============ -->
+<section id="methode">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Méthode</span>
+      <h2>Cinq étapes, aucune zone d'ombre.</h2>
+      <p>Vous savez à tout moment où en est votre projet, ce qu'il vous coûte et quand il arrive.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Brief</h3>
+          <p>On échange 20 minutes en vocal ou par écrit : votre activité, ce que le site doit faire, qui l'utilisera. Aucune question technique, c'est mon métier.</p>
+          <span class="step-meta">Gratuit · le jour même</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Devis écrit</h3>
+          <p>Vous recevez un document listant chaque fonctionnalité, le montant total et la date de livraison. Rien ne commence avant votre signature.</p>
+          <span class="step-meta">Sous 24 h</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Maquette</h3>
+          <p>Une image du site avant sa construction. On ajuste les couleurs, le logo, l'agencement jusqu'à ce que ça vous plaise — les retours sont illimités à cette étape.</p>
+          <span class="step-meta">1 à 2 jours</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Développement</h3>
+          <p>Je construis le site sur un lien de test privé que vous suivez en direct. Vous voyez l'avancement chaque jour, sans avoir à me relancer.</p>
+          <span class="step-meta">2 à 10 jours selon le projet</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Livraison &amp; suivi</h3>
+          <p>Mise en ligne, remise du code source, et une prise en main de 30 minutes pour vous et vos cadres. Les 30 jours suivants, les corrections sont incluses.</p>
+          <span class="step-meta">30 jours de garantie</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORMULES ============ -->
+<section id="formules">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Formules</span>
+      <h2>Trois formules, un devis pour chacune.</h2>
+      <p>Chaque projet est unique : le montant est établi après le brief, en fonction de ce dont vous avez réellement besoin. Le configurateur juste en dessous prépare ce brief à votre place.</p>
+    </div>
+    <div class="price-grid">
+
+      <article class="card price reveal">
+        <h3>Vitrine</h3>
+        <div class="amount">Sur devis</div>
+        <div class="delay">Le format le plus rapide à livrer</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Jusqu'à 5 pages</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Design sur mesure</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Adapté téléphone et PC</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Formulaire de contact</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>30 jours de corrections</li>
+        </ul>
+        <a href="#devis" class="btn btn-ghost">Configurer</a>
+      </article>
+
+      <article class="card price featured reveal d1">
+        <span class="badge-best">Recommandé</span>
+        <h3>Espace membre</h3>
+        <div class="amount">Sur devis</div>
+        <div class="delay">La demande la plus fréquente</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tout le pack Vitrine</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Comptes employés et grades</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Fiches et documents internes</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Panneau d'administration</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Formation de vos cadres</li>
+        </ul>
+        <a href="#devis" class="btn btn-primary">Configurer</a>
+      </article>
+
+      <article class="card price reveal d2">
+        <h3>Suite de gestion</h3>
+        <div class="amount">Sur devis</div>
+        <div class="delay">Pour les structures les plus larges</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tout le pack Espace membre</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Facturation et devis PDF</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tableau de bord et statistiques</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Modules sur mesure</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Suivi prioritaire</li>
+        </ul>
+        <a href="#devis" class="btn btn-ghost">Configurer</a>
+      </article>
+
+    </div>
+    <p class="price-note reveal">
+      Maintenance mensuelle optionnelle, sans engagement et résiliable à tout moment.
+      Paiement en deux fois : la moitié à la validation de la maquette, l'autre moitié à la livraison.
+    </p>
+  </div>
+</section>
+
+<!-- ============ SIMULATEUR ============ -->
+<section id="devis">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Configurateur</span>
+      <h2>Votre cahier des charges en 1 minute.</h2>
+      <p>Cochez ce dont vous avez besoin : le récapitulatif se construit en direct. Copiez-le et envoyez-le moi — vous recevez un devis détaillé sous 24 h.</p>
+    </div>
+
+    <div class="sim">
+      <div class="sim-panel reveal">
+
+        <div class="field">
+          <span class="field-label">1. Type de projet</span>
+          <div class="opts" role="radiogroup" aria-label="Type de projet">
+            <div class="opt">
+              <input type="radio" name="ptype" id="t1" value="vitrine" checked>
+              <label for="t1"><b>Vitrine</b><span>Présentation publique</span></label>
+            </div>
+            <div class="opt">
+              <input type="radio" name="ptype" id="t2" value="membre">
+              <label for="t2"><b>Espace membre</b><span>Comptes et grades</span></label>
+            </div>
+            <div class="opt">
+              <input type="radio" name="ptype" id="t3" value="suite">
+              <label for="t3"><b>Suite de gestion</b><span>Outil complet</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">2. Options <span class="field-hint">facultatives, cumulables</span></span>
+          <div class="checks" id="optsBox">
+            <label class="check"><input type="checkbox" data-opt="Facturation &amp; devis PDF"><span class="txt"><b>Facturation &amp; devis PDF</b><span>Documents générés et archivés</span></span></label>
+            <label class="check"><input type="checkbox" data-opt="Tableau de bord &amp; statistiques"><span class="txt"><b>Tableau de bord</b><span>Chiffres clés en direct</span></span></label>
+            <label class="check"><input type="checkbox" data-opt="Formulaire de recrutement"><span class="txt"><b>Recrutement</b><span>Candidatures classées</span></span></label>
+            <label class="check"><input type="checkbox" data-opt="Boutique / catalogue produits"><span class="txt"><b>Boutique / catalogue</b><span>Produits et tarifs publics</span></span></label>
+            <label class="check"><input type="checkbox" data-opt="Notifications Discord"><span class="txt"><b>Notifications Discord</b><span>Alerte à chaque demande</span></span></label>
+            <label class="check"><input type="checkbox" data-opt="Pointeuse &amp; suivi des heures"><span class="txt"><b>Pointeuse employés</b><span>Heures et présences</span></span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">3. Urgence</span>
+          <div class="opts" role="radiogroup" aria-label="Urgence">
+            <div class="opt">
+              <input type="radio" name="prio" id="p1" value="normal" checked>
+              <label for="p1"><b>Standard</b><span>Délai fixé au devis</span></label>
+            </div>
+            <div class="opt">
+              <input type="radio" name="prio" id="p2" value="express">
+              <label for="p2"><b>Express</b><span>Traitement prioritaire</span></label>
+            </div>
+            <div class="opt">
+              <input type="radio" name="prio" id="p3" value="maint">
+              <label for="p3"><b>Standard + suivi</b><span>Avec maintenance</span></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="sim-result reveal d1" aria-live="polite">
+        <span class="lab">Votre cahier des charges</span>
+        <div class="sim-total" id="simTotal">Site vitrine</div>
+        <div class="sim-delay" id="simDelay">Aucun module optionnel</div>
+        <div class="sim-lines" id="simLines"></div>
+        <button class="btn btn-primary" id="copyBtn" type="button">
+          Copier le récapitulatif
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+        </button>
+        <a href="#contact" class="btn btn-ghost">Envoyer ma demande</a>
+        <p class="sim-disclaimer">Ce récapitulatif ne vous engage à rien. Il sert de base au brief : à partir de là, vous recevez un devis détaillé et daté sous 24 h.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENTS ============ -->
+<section id="engagements">
+  <div class="wrap">
+    <div class="grid g2" style="align-items:center">
+      <div class="sec-head reveal" style="margin-bottom:0">
+        <span class="eyebrow">Cadre &amp; conformité</span>
+        <h2>Un travail propre, et dans les règles.</h2>
+        <p>Paulygone opère dans le cadre fixé par l'administration de la ville. Ces règles ne sont pas subies : elles sont écrites dans chaque contrat, parce qu'elles protègent aussi le client.</p>
+      </div>
+      <div class="pledges reveal d1">
+        <div class="pledge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><b>Code source remis</b><span>Livré intégralement, sans partie cachée ni verrou.</span></div></div>
+        <div class="pledge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><b>Hébergement officiel</b><span>Mise en production sur l'infrastructure agréée.</span></div></div>
+        <div class="pledge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><b>Validation préalable</b><span>Aucune fonctionnalité déployée sans accord.</span></div></div>
+        <div class="pledge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><b>Confidentialité</b><span>Vos données internes ne sortent jamais du projet.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Questions fréquentes</span>
+      <h2>Ce qu'on me demande le plus.</h2>
+    </div>
+    <div class="faq">
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Je n'y connais rien en informatique, c'est un problème ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>Au contraire, c'est le cas le plus courant. Vous m'expliquez votre métier, je m'occupe de la technique. Aucun terme compliqué ne vous sera imposé, et la maquette vous montre le résultat en image avant même que le site existe.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Et si le rendu ne me plaît pas ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>C'est justement le rôle de la maquette, à l'étape 3. Tant qu'elle n'est pas validée, aucun acompte n'est demandé et vous pouvez tout arrêter sans rien payer. Les retours sont illimités à ce stade.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Que se passe-t-il si un bug apparaît après la livraison ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>Pendant 30 jours, toute correction est gratuite et traitée en priorité. Au-delà, la formule de maintenance mensuelle couvre les corrections et les petites évolutions. Sans maintenance, chaque intervention est simplement facturée à l'acte, sur devis.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Puis-je faire modifier mon site plus tard par quelqu'un d'autre ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>Oui. Le code source complet vous est remis à la livraison, sans partie masquée. Vous n'êtes prisonnier de personne — c'est une condition que je m'impose, pas une option payante.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Travaillez-vous avec les autres agences de la ville ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>Volontiers. L'objectif n'est pas de prendre la place des confrères mais d'absorber le surplus de demandes et de réduire l'attente pour les entreprises. Un renfort ponctuel sur une grosse commande est tout à fait envisageable.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Comment se passe le paiement ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>En deux fois : la moitié une fois la maquette validée, l'autre moitié à la livraison du site. Rien n'est versé avant que vous ayez vu et approuvé le rendu.</p></div>
+      </div>
+      <div class="qa reveal">
+        <button type="button" aria-expanded="false">Pourquoi les tarifs ne sont-ils pas affichés ?<span class="plus" aria-hidden="true"></span></button>
+        <div class="ans"><p>Parce qu'un site de trois pages et un outil de gestion complet n'ont rien à voir. Plutôt qu'un prix d'appel trompeur, vous recevez un devis détaillé ligne par ligne sous 24 h après le brief — et il fait foi jusqu'à la livraison.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Contact</span>
+      <h2>Parlons de votre projet.</h2>
+      <p>Remplissez ce formulaire : il prépare un message propre et complet, que vous n'avez plus qu'à copier et m'envoyer. Réponse garantie sous 24 h.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="card">
+          <div class="ico" style="margin-bottom:0" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 4h7a5 5 0 014.5 3.2c1 2.6 1 5.6 0 8.2A5 5 0 0116 18.5l-.7 1.4-3.3-1-3.3 1L8 18.5a5 5 0 01-4-3.1c-1-2.6-1-5.6 0-8.2A5 5 0 018.5 4z"/><circle cx="9.5" cy="12" r="1.4"/><circle cx="14.5" cy="12" r="1.4"/></svg></div>
+          <div><b>Discord</b><span>Le canal le plus rapide. Message privé ou vocal, selon votre préférence.</span></div>
+        </div>
+        <div class="card">
+          <div class="ico mint" style="margin-bottom:0" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><b>Disponibilités</b><span>Plus de 20 h par semaine, soirs et week-ends compris.</span></div>
+        </div>
+        <div class="card">
+          <div class="ico" style="margin-bottom:0" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1116 0z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+          <div><b>Secteur</b><span>Los Santos et alentours. Déplacement possible pour un premier rendez-vous.</span></div>
+        </div>
+      </div>
+
+      <div class="form reveal d1">
+        <div class="row">
+          <div class="fgroup"><label for="fNom">Votre nom</label><input id="fNom" type="text" placeholder="Prénom Nom" autocomplete="name"></div>
+          <div class="fgroup"><label for="fEnt">Entreprise</label><input id="fEnt" type="text" placeholder="Nom de l'entreprise" autocomplete="organization"></div>
+        </div>
+        <div class="row">
+          <div class="fgroup"><label for="fDis">Pseudo Discord</label><input id="fDis" type="text" placeholder="pseudo"></div>
+          <div class="fgroup">
+            <label for="fType">Type de projet</label>
+            <select id="fType">
+              <option>Site vitrine</option>
+              <option>Espace membre</option>
+              <option>Suite de gestion</option>
+              <option>Maintenance d'un site existant</option>
+              <option>Je ne sais pas encore</option>
+            </select>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label for="fMsg">Votre besoin en quelques lignes</label>
+          <textarea id="fMsg" placeholder="Ex. : nous sommes 12 employés, il nous faut un site public et un espace interne pour gérer les plannings et les factures."></textarea>
+        </div>
+        <button class="btn btn-primary" id="genBtn" type="button" style="width:100%">Générer mon message</button>
+
+        <div id="msgOut">
+          <label for="msgPreview" style="margin-top:18px;display:block">Message prêt à envoyer</label>
+          <textarea id="msgPreview" readonly></textarea>
+          <button class="btn btn-ghost" id="copyMsg" type="button" style="width:100%;margin-top:10px">Copier le message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="rp-note">
+      <b>Note hors-jeu :</b> ce site présente une entreprise fictive dans le cadre d'un serveur de jeu de rôle.
+      Les montants sont exprimés en monnaie du jeu et n'ont aucune valeur réelle.
+    </div>
+    <div class="foot-grid">
+      <div>
+        <a href="#hero" class="logo">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7C5CFF"/><stop offset="100%" stop-color="#00E5A0"/>
+            </linearGradient></defs>
+            <polygon points="32,3 58,18 58,46 32,61 6,46 6,18" fill="none" stroke="url(#lg2)" stroke-width="4"/>
+            <polygon points="32,19 45,26.5 45,41.5 32,49 19,41.5 19,26.5" fill="url(#lg2)"/>
+          </svg>
+          <span>Paulygone<small>Web &amp; Systèmes</small></span>
+        </a>
+        <p>Création de sites internet, espaces membres et outils de gestion pour les entreprises de Los Santos.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Site vitrine</a></li>
+          <li><a href="#services">Espace membre</a></li>
+          <li><a href="#services">Facturation</a></li>
+          <li><a href="#services">Maintenance</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>L'entreprise</h4>
+        <ul>
+          <li><a href="#methode">Méthode</a></li>
+          <li><a href="#formules">Formules</a></li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© <span id="year">2026</span> Paulygone — Los Santos, San Andreas.</span>
+      <span>Devis sous 24 h · Délais tenus · Code source remis</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copié !</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Header au scroll ---------- */
+  var hdr = document.getElementById('hdr');
+  function onScroll(){ hdr.classList.toggle('scrolled', window.scrollY > 20); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  /* ---------- Menu mobile ---------- */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', function(){
+    var open = menu.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  menu.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){
+      menu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* ---------- Apparition au défilement ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -60px 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- Compteurs animés ---------- */
+  var counters = document.querySelectorAll('.count');
+  function runCount(el){
+    var to = parseFloat(el.dataset.to), suffix = el.dataset.suffix || '', start = null, dur = 1100;
+    if(reduce){ el.textContent = to + suffix; return; }
+    function tick(ts){
+      if(!start) start = ts;
+      var p = Math.min((ts - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(to * eased) + suffix;
+      if(p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  if('IntersectionObserver' in window){
+    var ioc = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ runCount(en.target); ioc.unobserve(en.target); } });
+    }, {threshold:.5});
+    counters.forEach(function(el){ ioc.observe(el); });
+  } else {
+    counters.forEach(runCount);
+  }
+
+  /* ---------- Lien de navigation actif ---------- */
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function(){
+    var pos = window.scrollY + 120, current = '';
+    sections.forEach(function(s){ if(pos >= s.offsetTop) current = s.id; });
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }, {passive:true});
+
+  /* ---------- FAQ (accordéon) ---------- */
+  document.querySelectorAll('.qa').forEach(function(qa){
+    var btn = qa.querySelector('button'), ans = qa.querySelector('.ans');
+    btn.addEventListener('click', function(){
+      var open = qa.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      ans.style.maxHeight = open ? (ans.scrollHeight + 'px') : '0px';
+    });
+  });
+
+  /* ---------- Toast ---------- */
+  var toast = document.getElementById('toast'), toastTimer;
+  function showToast(txt){
+    toast.textContent = txt || 'Copié !';
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+  function copyText(txt){
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(txt).then(function(){ showToast('Copié !'); },
+                                             function(){ fallbackCopy(txt); });
+    } else { fallbackCopy(txt); }
+  }
+  function fallbackCopy(txt){
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.top = '-1000px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast('Copié !'); }
+    catch(e){ showToast('Copie impossible — sélectionnez le texte'); }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- Configurateur de projet ---------- */
+  var BASE = {
+    vitrine: {label:'Site vitrine',     desc:'Présentation publique de l\'entreprise'},
+    membre:  {label:'Espace membre',    desc:'Partie privée avec comptes et grades'},
+    suite:   {label:'Suite de gestion', desc:'Outil interne complet'}
+  };
+  var PRIO = {
+    normal:  'Standard — délai fixé au devis',
+    express: 'Express — traitement prioritaire',
+    maint:   'Standard + maintenance mensuelle'
+  };
+  var totalEl = document.getElementById('simTotal');
+  var delayEl = document.getElementById('simDelay');
+  var linesEl = document.getElementById('simLines');
+
+  function decode(s){ var d = document.createElement('textarea'); d.innerHTML = s; return d.value; }
+
+  function readState(){
+    var type = document.querySelector('input[name="ptype"]:checked').value;
+    var prio = document.querySelector('input[name="prio"]:checked').value;
+    var base = BASE[type];
+    var mods = [];
+    document.querySelectorAll('#optsBox input:checked').forEach(function(c){
+      mods.push(decode(c.dataset.opt));
+    });
+    return {type: base.label, desc: base.desc, prio: PRIO[prio], modules: mods};
+  }
+
+  function render(){
+    var s = readState();
+    totalEl.textContent = s.type;
+    delayEl.textContent = s.modules.length === 0
+      ? 'Aucun module optionnel'
+      : s.modules.length + (s.modules.length > 1 ? ' modules ajoutés' : ' module ajouté');
+
+    linesEl.innerHTML = '';
+    function addRow(k, v){
+      var row = document.createElement('div');
+      row.className = 'sim-line';
+      var a = document.createElement('span'); a.textContent = k;
+      var b = document.createElement('b');    b.textContent = v;
+      row.appendChild(a); row.appendChild(b);
+      linesEl.appendChild(row);
+    }
+    addRow('Base', s.desc);
+    s.modules.forEach(function(m){ addRow(m, 'inclus'); });
+    addRow('Urgence', s.prio);
+  }
+
+  document.querySelectorAll('input[name="ptype"], input[name="prio"]').forEach(function(i){
+    i.addEventListener('change', render);
+  });
+  document.querySelectorAll('#optsBox input').forEach(function(c){
+    c.addEventListener('change', function(){
+      c.closest('.check').classList.toggle('on', c.checked);
+      render();
+    });
+  });
+  render();
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var s = readState();
+    var txt = '**Demande de devis — Paulygone**\n';
+    txt += '\nType de projet : ' + s.type + ' (' + s.desc + ')';
+    txt += '\nUrgence : ' + s.prio;
+    txt += '\n\nModules souhaités :';
+    if(s.modules.length === 0){ txt += '\n• Aucun module optionnel'; }
+    else { s.modules.forEach(function(m){ txt += '\n• ' + m; }); }
+    txt += '\n\n(Récapitulatif généré depuis le site de Paulygone. Devis détaillé sous 24 h.)';
+    copyText(txt);
+  });
+
+  /* ---------- Formulaire : génération du message ---------- */
+  function val(id){ return (document.getElementById(id).value || '').trim(); }
+  document.getElementById('genBtn').addEventListener('click', function(){
+    var s = readState();
+    var nom = val('fNom') || 'Non précisé';
+    var ent = val('fEnt') || 'Non précisée';
+    var dis = val('fDis');
+    var typ = document.getElementById('fType').value;
+    var msg = val('fMsg') || 'Non précisé';
+
+    var out = 'Bonjour Paulygone,\n\n';
+    out += 'Je souhaite faire réaliser un projet web.\n\n';
+    out += '• Nom : ' + nom + '\n';
+    out += '• Entreprise : ' + ent + '\n';
+    if(dis) out += '• Discord : ' + dis + '\n';
+    out += '• Type de projet : ' + typ + '\n\n';
+    out += 'Besoin :\n' + msg + '\n\n';
+    out += '--- Configuration choisie sur le site ---\n';
+    out += 'Base : ' + s.type + '\n';
+    if(s.modules.length === 0){ out += 'Modules : aucun pour le moment\n'; }
+    else { s.modules.forEach(function(m){ out += '+ ' + m + '\n'; }); }
+    out += 'Urgence : ' + s.prio + '\n\n';
+    out += 'Merci d\'avance pour votre retour et votre devis.';
+
+    var box = document.getElementById('msgOut');
+    document.getElementById('msgPreview').value = out;
+    box.classList.add('show');
+    box.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'nearest'});
+  });
+  document.getElementById('copyMsg').addEventListener('click', function(){
+    copyText(document.getElementById('msgPreview').value);
+  });
+
+  /* ---------- Année automatique ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------- Fond animé : réseau de polygones ---------- */
+  (function(){
+    if(reduce) return;
+    var cv = document.getElementById('bgCanvas');
+    if(!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d'), w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var pts = [], raf = null, running = true;
+
+    function resize(){
+      var r = cv.getBoundingClientRect();
+      w = r.width; h = r.height;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var target = Math.min(64, Math.max(22, Math.round(w * h / 20000)));
+      pts = [];
+      for(var i = 0; i < target; i++){
+        pts.push({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22,
+          r: Math.random() * 1.6 + .8
+        });
+      }
+    }
+
+    function draw(){
+      if(!running) return;
+      ctx.clearRect(0, 0, w, h);
+      for(var i = 0; i < pts.length; i++){
+        var p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0 || p.x > w) p.vx *= -1;
+        if(p.y < 0 || p.y > h) p.vy *= -1;
+        for(var j = i + 1; j < pts.length; j++){
+          var q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = Math.sqrt(dx*dx + dy*dy);
+          if(d < 140){
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(124,92,255,' + (0.16 * (1 - d/140)) + ')';
+            ctx.lineWidth = 1;
+            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.fillStyle = i % 4 === 0 ? 'rgba(0,229,160,.55)' : 'rgba(124,92,255,.5)';
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      raf = requestAnimationFrame(draw);
+    }
+
+    var rz;
+    window.addEventListener('resize', function(){
+      clearTimeout(rz); rz = setTimeout(function(){ resize(); }, 180);
+    });
+    document.addEventListener('visibilitychange', function(){
+      running = !document.hidden;
+      if(running) draw(); else if(raf) cancelAnimationFrame(raf);
+    });
+    // On coupe l'animation quand le héros n'est plus visible (économie CPU)
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){
+        var vis = en[0].isIntersecting;
+        if(vis && !running){ running = true; draw(); }
+        else if(!vis && running){ running = false; if(raf) cancelAnimationFrame(raf); }
+      }, {threshold:0}).observe(document.getElementById('hero'));
+    }
+    resize(); draw();
+  })();
+})();
+</script>
+</body>
+</html>
