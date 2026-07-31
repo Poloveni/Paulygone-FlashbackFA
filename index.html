@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Digital Prisme — Studio web · Los Santos</title>
-<meta name="description" content="Digital Prisme conçoit, développe et maintient les sites, espaces membres et outils de gestion des entreprises de Los Santos. Sardine Avenue, Juniper by the Shore.">
+<meta name="description" content="Digital Prisme conçoit, développe et maintient les sites, espaces membres et outils de gestion des entreprises de Los Santos. Sardine Avenue, Roxwood.">
 <meta name="theme-color" content="#07080C">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Digital Prisme">
@@ -120,7 +120,13 @@ header.stuck{
 .burger[aria-expanded="true"] i::after{transform:rotate(-45deg);top:0}
 
 /* ---------- héro ---------- */
-#hero{padding:172px 0 92px;overflow:hidden}
+#hero{padding:172px 0 92px;overflow:hidden;position:relative;isolation:isolate}
+#prism{
+  position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 66%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 66%,transparent 100%);
+}
+#hero > .wrap{position:relative;z-index:2}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
 #hero h1{font-size:clamp(36px,5.6vw,62px);font-weight:700;margin-bottom:22px}
 .hero-lead{color:var(--mut);font-size:18px;max-width:52ch;line-height:1.7}
@@ -135,11 +141,7 @@ header.stuck{
 .glow{position:absolute;border-radius:50%;filter:blur(78px);opacity:.5;pointer-events:none}
 .g1{width:340px;height:340px;background:#F23BA0;top:2%;left:6%}
 .g2{width:320px;height:320px;background:#25D5EC;bottom:2%;right:4%}
-.beam{
-  position:absolute;top:-40%;left:-30%;width:180%;height:180%;pointer-events:none;z-index:1;
-  background:linear-gradient(102deg,transparent 42%,rgba(242,59,160,.16) 48%,rgba(178,75,216,.14) 52%,rgba(37,213,236,.16) 56%,transparent 62%);
-  filter:blur(22px);
-}
+.glow{opacity:.38}
 
 /* ---------- indicateurs ---------- */
 #indic{padding:0 0 96px}
@@ -360,7 +362,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
 
 <!-- ============ HÉRO ============ -->
 <section id="hero">
-  <div class="beam" aria-hidden="true"></div>
+  <canvas id="prism" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-grid">
       <div>
@@ -518,11 +520,11 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
   <div class="wrap">
     <p class="kick rev">Nous trouver</p>
     <h2 class="sec-h2 rev d1">Sardine Avenue.</h2>
-    <p class="lead rev d2">Un immeuble de bureaux sur trois niveaux, à Juniper by the Shore.</p>
+    <p class="lead rev d2">Un immeuble de bureaux sur trois niveaux, à Roxwood.</p>
 
     <div class="loc">
       <dl class="loc-list rev">
-        <div class="loc-row"><dt>Adresse</dt><dd>Sardine Avenue<small>Juniper by the Shore — Los Santos, San Andreas</small></dd></div>
+        <div class="loc-row"><dt>Adresse</dt><dd>Sardine Avenue<small>Roxwood — Los Santos, San Andreas</small></dd></div>
         <div class="loc-row"><dt>Horaires</dt><dd>Lundi → dimanche, 09:00 → nuit<small>Une amplitude tenue à deux, sept jours sur sept</small></dd></div>
         <div class="loc-row"><dt>Accueil</dt><dd>Sur rendez-vous uniquement<small>La prise de contact se fait par le Discord de l'entreprise</small></dd></div>
         <div class="loc-row"><dt>Sur place</dt><dd>Accueil, open space et bureau de direction<small>Aménagement en cours d'installation</small></dd></div>
@@ -609,7 +611,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
     <h3 id="legalTitle">Mentions légales</h3>
     <dl>
       <dt>Éditeur</dt>
-      <dd>Digital Prisme, studio web. Sardine Avenue, Juniper by the Shore — Los Santos, San Andreas.</dd>
+      <dd>Digital Prisme, studio web. Sardine Avenue, Roxwood — Los Santos, San Andreas.</dd>
       <dt>Direction</dt>
       <dd>Javier Silva, patron. Javier Silva, co-patron.</dd>
       <dt>Propriété des réalisations</dt>
@@ -708,6 +710,166 @@ footer{border-top:1px solid var(--line);padding:56px 0 34px;background:var(--bg2
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && legal.classList.contains('open')) closeLegal();
   });
+
+  /* ---- prisme animé (canvas) ----------------------------------
+     Un faisceau entre par la gauche, frappe le prisme et se
+     décompose en spectre. Décor uniquement, jamais interactif.   */
+  (function(){
+    var cv = document.getElementById('prism');
+    if(!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d');
+    if(!ctx) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SP = [[242,59,160],[228,68,190],[196,84,216],[150,106,232],[96,146,240],[54,184,240],[37,213,236]];
+    var W = 0, H = 0, dpr = 1, t = 0, raf = null, alive = true;
+    var facets = [], dust = [];
+
+    function rnd(a,b){ return a + Math.random()*(b-a); }
+
+    function build(){
+      facets = []; dust = [];
+      var nf = W < 760 ? 7 : 14;
+      var nd = W < 760 ? 20 : 44;
+      for(var i=0;i<nf;i++){
+        facets.push({
+          x:rnd(0,W), y:rnd(0,H), r:rnd(20,66),
+          a:rnd(0,6.28), sp:rnd(-0.0018,0.0018),
+          vx:rnd(-0.10,0.10), vy:rnd(-0.08,0.08),
+          n:(Math.random()<0.55?3:4), o:rnd(0.04,0.11),
+          c:(Math.random()<0.5?[242,59,160]:[37,213,236])
+        });
+      }
+      for(var j=0;j<nd;j++){
+        dust.push({ x:rnd(0,W), y:rnd(0,H), r:rnd(0.6,1.9),
+          vx:rnd(-0.06,0.06), vy:rnd(-0.18,-0.03), o:rnd(0.14,0.55), ph:rnd(0,6.28) });
+      }
+    }
+
+    function size(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      if(!W || !H) return;
+      cv.width  = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      build();
+    }
+
+    /* une bande colorée le long d'une direction, qui apparaît puis
+       s'éteint : "peak" situe le maximum d'intensité sur la longueur */
+    function band(x,y,ang,len,wid,col,alpha,peak){
+      var x2 = x + Math.cos(ang)*len, y2 = y + Math.sin(ang)*len;
+      var g = ctx.createLinearGradient(x,y,x2,y2);
+      var c = 'rgba('+col[0]+','+col[1]+','+col[2]+',';
+      g.addColorStop(0, c+'0)');
+      g.addColorStop(Math.max(0.02, peak-0.16), c+(alpha*0.35)+')');
+      g.addColorStop(peak, c+alpha+')');
+      g.addColorStop(Math.min(0.98, peak+0.30), c+(alpha*0.45)+')');
+      g.addColorStop(1, c+'0)');
+      ctx.strokeStyle = g; ctx.lineWidth = wid; ctx.lineCap = 'butt';
+      ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+
+    function draw(){
+      if(!W || !H) return;
+      ctx.clearRect(0,0,W,H);
+      ctx.globalCompositeOperation = 'lighter';
+
+      /* facettes flottantes */
+      for(var i=0;i<facets.length;i++){
+        var f = facets[i];
+        if(!reduce){
+          f.a += f.sp; f.x += f.vx; f.y += f.vy;
+          if(f.x < -140) f.x = W+140; else if(f.x > W+140) f.x = -140;
+          if(f.y < -140) f.y = H+140; else if(f.y > H+140) f.y = -140;
+        }
+        ctx.save(); ctx.translate(f.x, f.y); ctx.rotate(f.a);
+        ctx.beginPath();
+        for(var k=0;k<f.n;k++){
+          var an = (k/f.n)*6.283185 - 1.5708;
+          var vx = Math.cos(an)*f.r, vy = Math.sin(an)*f.r;
+          if(k) ctx.lineTo(vx,vy); else ctx.moveTo(vx,vy);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba('+f.c[0]+','+f.c[1]+','+f.c[2]+','+f.o+')';
+        ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+      }
+
+      /* le spectre : le faisceau entre par le haut à gauche et
+         se décompose en bandes diagonales sur toute la largeur */
+      var px = W*0.03, py = -H*0.12;
+      var base = Math.atan2(H*1.05 - py, W*0.80 - px);
+      var len  = 1.9 * Math.sqrt(W*W + H*H);
+      var puls = reduce ? 1 : (0.80 + 0.20*Math.sin(t*0.55));
+      /* sur écran étroit le faisceau passe derrière le texte : on l'atténue */
+      var k = W < 760 ? 0.55 : 1;
+
+      /* traînée blanche, l'axe du faisceau */
+      band(px, py, base - 0.235, len, 2.5, [240,245,255], 0.20*puls*k, 0.30);
+      band(px, py, base - 0.235, len, 34,  [214,226,255], 0.055*puls*k, 0.32);
+
+      for(var r=0;r<SP.length;r++){
+        var fr  = r/(SP.length-1);
+        var ang = base - 0.18 + fr*0.46;
+        var osc = reduce ? 1 : (0.62 + 0.38*Math.sin(t*0.5 + r*0.7));
+        band(px, py, ang, len, 30 + fr*22, SP[r], 0.105*osc*k, 0.30 + fr*0.09);
+        band(px, py, ang, len, 2,          SP[r], 0.26*osc*k,  0.33 + fr*0.09);
+      }
+
+      /* halo au point d'entrée, côté prisme */
+      var hx = W*0.62, hy = H*0.44, rr = (W<820 ? 120 : 190) * puls;
+      var gg = ctx.createRadialGradient(hx,hy,0,hx,hy,rr);
+      gg.addColorStop(0,   'rgba(196,150,246,'+(0.10*puls)+')');
+      gg.addColorStop(0.45,'rgba(150,110,235,'+(0.05*puls)+')');
+      gg.addColorStop(1,   'rgba(110,80,210,0)');
+      ctx.fillStyle = gg;
+      ctx.beginPath(); ctx.arc(hx,hy,rr,0,6.283185); ctx.fill();
+
+      /* poussière lumineuse */
+      for(var d=0;d<dust.length;d++){
+        var pt = dust[d];
+        if(!reduce){
+          pt.x += pt.vx; pt.y += pt.vy;
+          if(pt.y < -10){ pt.y = H+10; pt.x = Math.random()*W; }
+          if(pt.x < -10) pt.x = W+10; else if(pt.x > W+10) pt.x = -10;
+        }
+        var tw = reduce ? 1 : (0.55 + 0.45*Math.sin(t*1.6 + pt.ph));
+        ctx.fillStyle = 'rgba(215,230,255,'+(pt.o*tw)+')';
+        ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.r,0,6.283185); ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function loop(){
+      t += 0.016;
+      draw();
+      raf = requestAnimationFrame(loop);
+    }
+    function start(){ if(!raf && alive && !reduce) raf = requestAnimationFrame(loop); }
+    function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
+
+    size(); draw();
+    if(reduce) return;
+
+    /* on n'anime que si le héro est à l'écran et l'onglet actif */
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(e){
+        alive = e[0].isIntersecting;
+        alive ? start() : stop();
+      },{threshold:0}).observe(cv);
+    } else { start(); }
+    document.addEventListener('visibilitychange', function(){
+      document.hidden ? stop() : start();
+    });
+
+    var rz = null;
+    window.addEventListener('resize', function(){
+      clearTimeout(rz);
+      rz = setTimeout(function(){ size(); draw(); }, 160);
+    });
+  })();
 
   /* ---- messages temporaires ---- */
   var toast = document.getElementById('toast'), toastId = null;
