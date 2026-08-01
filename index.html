@@ -190,8 +190,11 @@ header.stuck{
 .card:hover::before{transform:scaleX(1)}
 .card h3{font-size:19px;font-weight:600;margin-bottom:12px}
 .card p{color:var(--mut);font-size:14.6px;line-height:1.68}
-.bar{width:38px;height:4px;border-radius:4px;background:var(--grad);margin-bottom:20px}
-.bar.c{background:linear-gradient(115deg,#25D5EC,#B24BD8)}
+.ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:20px;
+  border:1px solid var(--line2);background:rgba(255,255,255,.03);color:var(--mag);
+  transition:color .25s ease,border-color .25s ease,background .25s ease}
+.ic.c{color:var(--cya)}
+.card:hover .ic{border-color:currentColor;background:rgba(255,255,255,.06)}
 
 /* ---------- à propos ---------- */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:46px}
@@ -441,9 +444,9 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
     <p class="lead rev d2">Prisme Digital n'est pas né d'une idée. Il est né d'une commande que personne d'autre n'a voulu prendre.</p>
 
     <div class="cards c3">
-      <div class="card rev d1"><div class="bar"></div><h3>Délai tenu</h3><p>La date de livraison est écrite dans le devis. Elle n'est pas estimée à la louche : elle est tenue, ou elle n'est pas annoncée.</p></div>
-      <div class="card rev d2"><div class="bar c"></div><h3>Code transmis</h3><p>Le client repart avec la source complète de son site. Sans exception, sans condition, sans dépendance à nous.</p></div>
-      <div class="card rev d3"><div class="bar"></div><h3>Suivi durable</h3><p>Un site vit. Nous restons joignables après la livraison, et nous corrigeons ce qui doit l'être.</p></div>
+      <div class="card rev d1"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><h3>Délai tenu</h3><p>La date de livraison est écrite dans le devis. Elle n'est pas estimée à la louche : elle est tenue, ou elle n'est pas annoncée.</p></div>
+      <div class="card rev d2"><div class="ic c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></div><h3>Code transmis</h3><p>Le client repart avec la source complète de son site. Sans exception, sans condition, sans dépendance à nous.</p></div>
+      <div class="card rev d3"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1 7.8 7.8 7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div><h3>Suivi durable</h3><p>Un site vit. Nous restons joignables après la livraison, et nous corrigeons ce qui doit l'être.</p></div>
     </div>
 
     <div class="about-grid">
@@ -505,12 +508,12 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
     <p class="lead rev d2">Du site d'une page à la suite de gestion complète. Chaque projet est étudié après un premier échange, puis chiffré au devis.</p>
 
     <div class="svc">
-      <div class="card rev d1"><div class="bar"></div><h3>Sites vitrines</h3><p>La façade publique de l'entreprise : présentation, offre, organigramme, grades et salaires, recrutement, contact. Lisible sur téléphone comme sur écran.</p></div>
-      <div class="card rev d2"><div class="bar c"></div><h3>Espaces membres</h3><p>La partie privée réservée aux employés : connexion sécurisée, grades et permissions, fiches internes, documents, panneau d'administration.</p></div>
-      <div class="card rev d3"><div class="bar"></div><h3>Outils de gestion</h3><p>Facturation, devis, tableau de bord, pointeuse, suivi des quotas et des primes. Les outils qui font tourner une entreprise au quotidien.</p></div>
-      <div class="card rev d1"><div class="bar c"></div><h3>Automatisations</h3><p>Ce qui se répète n'a pas à être fait à la main : relances de factures, calculs de primes, rapports hebdomadaires, mises à jour d'effectif.</p></div>
-      <div class="card rev d2"><div class="bar"></div><h3>Bots et intégrations</h3><p>Un Discord relié au site : notifications de livraison, ouverture de tickets, synchronisation des effectifs et des grades.</p></div>
-      <div class="card rev d3"><div class="bar c"></div><h3>Reprise et maintenance</h3><p>Un site existant à corriger, à faire évoluer ou à reprendre après un départ. Nous nous y branchons sans tout réécrire.</p></div>
+      <div class="card rev d1"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 9h19M6 6.5h.01M8.5 6.5h.01"/></svg></div><h3>Sites vitrines</h3><p>La façade publique de l'entreprise : présentation, offre, organigramme, grades et salaires, recrutement, contact. Lisible sur téléphone comme sur écran.</p></div>
+      <div class="card rev d2"><div class="ic c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v2"/></svg></div><h3>Espaces membres</h3><p>La partie privée réservée aux employés : connexion sécurisée, grades et permissions, fiches internes, documents, panneau d'administration.</p></div>
+      <div class="card rev d3"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 15.5v-3M12 15.5v-6M16.5 15.5v-4.5"/></svg></div><h3>Outils de gestion</h3><p>Facturation, devis, tableau de bord, pointeuse, suivi des quotas et des primes. Les outils qui font tourner une entreprise au quotidien.</p></div>
+      <div class="card rev d1"><div class="ic c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 0 1 14.3-6.2L21 8.5"/><path d="M21 4v4.5h-4.5"/><path d="M20.5 12a8.5 8.5 0 0 1-14.3 6.2L3 15.5"/><path d="M3 20v-4.5h4.5"/></svg></div><h3>Automatisations</h3><p>Ce qui se répète n'a pas à être fait à la main : relances de factures, calculs de primes, rapports hebdomadaires, mises à jour d'effectif.</p></div>
+      <div class="card rev d2"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="8" width="17" height="12" rx="3"/><path d="M12 4.5V8M8.5 13.5h.01M15.5 13.5h.01M9.5 16.5h5"/><circle cx="12" cy="3.5" r="1.2"/></svg></div><h3>Bots et intégrations</h3><p>Un Discord relié au site : notifications de livraison, ouverture de tickets, synchronisation des effectifs et des grades.</p></div>
+      <div class="card rev d3"><div class="ic c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5a4.5 4.5 0 0 0 5.9 5.9L21 12l-8 8a2.8 2.8 0 0 1-4-4l8-8z"/><path d="M14.5 5.5 12 3"/></svg></div><h3>Reprise et maintenance</h3><p>Un site existant à corriger, à faire évoluer ou à reprendre après un départ. Nous nous y branchons sans tout réécrire.</p></div>
     </div>
 
     <div class="svc-foot rev">
