@@ -196,6 +196,34 @@ header.stuck{
 .ic.c{color:var(--cya)}
 .card:hover .ic{border-color:currentColor;background:rgba(255,255,255,.06)}
 
+/* ---------- carrousel des réalisations ---------- */
+.carr{position:relative;margin-top:46px}
+.carr-vue{overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--surf)}
+.carr-piste{display:flex;transition:transform .55s cubic-bezier(.22,.9,.3,1);will-change:transform}
+.carr-item{flex:0 0 100%;min-width:0;position:relative}
+.carr-item img{display:block;width:100%;height:auto;aspect-ratio:2/1;object-fit:cover;object-position:top center}
+.carr-leg{position:absolute;left:0;right:0;bottom:0;padding:72px 30px 24px;
+  background:linear-gradient(0deg,rgba(7,8,12,.98) 0%,rgba(7,8,12,.94) 34%,
+    rgba(7,8,12,.72) 62%,transparent 100%)}
+.carr-leg b{display:block;font-family:var(--disp);font-size:20px;font-weight:600;margin-bottom:5px}
+.carr-leg span{color:#C3CBDA;font-size:14px}
+.carr-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;
+  border-radius:50%;display:grid;place-items:center;color:var(--txt);z-index:3;
+  background:rgba(7,8,12,.72);border:1px solid var(--line2);backdrop-filter:blur(8px);
+  transition:background .2s,border-color .2s,opacity .2s}
+.carr-nav:hover{background:rgba(7,8,12,.92);border-color:var(--cya)}
+.carr-nav.prev{left:16px} .carr-nav.next{right:16px}
+.carr-pts{display:flex;justify-content:center;gap:9px;margin-top:20px}
+.carr-pt{width:8px;height:8px;border-radius:50%;background:var(--line2);padding:0;
+  transition:width .25s,background .25s}
+.carr-pt.on{width:26px;border-radius:99px;background:var(--grad)}
+@media (max-width:700px){
+  .carr-nav{display:none}
+  .carr-item img{aspect-ratio:3/2}
+  .carr-leg{padding:56px 18px 16px}
+  .carr-leg b{font-size:16px} .carr-leg span{font-size:12.5px}
+}
+
 /* ---------- à propos ---------- */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:46px}
 .story p{color:var(--mut);font-size:15.5px;line-height:1.78}
@@ -433,6 +461,7 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
       <div class="nav-links" id="menu">
         <a href="#apropos">À propos</a>
         <a href="#services">Services</a>
+        <a href="#realisations">Réalisations</a>
         <a href="#methode">Méthode</a>
         <a href="#localisation">Nous trouver</a>
         <a class="btn btn-p btn-sm" href="#communaute">Lancer un projet</a>
@@ -589,6 +618,46 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
 <hr class="rule">
 
 <!-- ============ MÉTHODE ============ -->
+<section id="realisations">
+  <div class="wrap">
+    <p class="kick rev">Réalisations</p>
+    <h2 class="sec-h2 rev d1">Ce que nous avons livré.</h2>
+    <p class="lead rev d2">Des plateformes en service aujourd'hui, utilisées tous les jours par les entreprises qui nous les ont commandées.</p>
+
+    <div class="carr rev d3">
+      <div class="carr-vue" id="carr-vue">
+        <div class="carr-piste" id="carr-piste">
+          <div class="carr-item">
+            <img src="images/oil-vitrine.jpg" alt="Le site vitrine d'Oil Roxwood" loading="lazy" width="1400" height="696">
+            <div class="carr-leg"><b>Oil Roxwood · Site vitrine</b><span>Présentation, organigramme, grades et salaires, recrutement et contact.</span></div>
+          </div>
+          <div class="carr-item">
+            <img src="images/oil-espace.jpg" alt="L'espace membre d'Oil Roxwood" loading="lazy" width="1400" height="693">
+            <div class="carr-leg"><b>Oil Roxwood · Espace membre</b><span>Connexion des employés, grades et permissions, documents internes.</span></div>
+          </div>
+          <div class="carr-item">
+            <img src="images/oil-compta.jpg" alt="L'outil de comptabilité d'Oil Roxwood" loading="lazy" width="1400" height="693">
+            <div class="carr-leg"><b>Oil Roxwood · Comptabilité</b><span>Facturation, suivi des runs, quotas et primes de l'équipe.</span></div>
+          </div>
+          <div class="carr-item">
+            <img src="images/prisme-vitrine.jpg" alt="Le site de Prisme Digital" loading="lazy" width="1400" height="878">
+            <div class="carr-leg"><b>Prisme Digital · Notre site</b><span>Celui que vous lisez. Conçu, développé et maintenu par nos soins.</span></div>
+          </div>
+        </div>
+        <button type="button" class="carr-nav prev" id="carr-prev" aria-label="Réalisation précédente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="carr-nav next" id="carr-next" aria-label="Réalisation suivante">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+      <div class="carr-pts" id="carr-pts"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
 <section id="methode">
   <div class="wrap">
     <p class="kick rev">Méthode</p>
@@ -1041,6 +1110,85 @@ html.motion-on .mtoggle .sw::after{transform:translateX(15px);background:var(--c
       document.dispatchEvent(new CustomEvent('dp:motion',{detail:on}));
       if(on){ document.querySelectorAll('.rev').forEach(function(el){ el.classList.add('in'); }); }
     });
+  })();
+
+  /* ══════════════════════════════════════════════════════════
+     CARROUSEL DES RÉALISATIONS
+     Glissement au doigt et à la souris, flèches, pastilles,
+     défilement automatique qui s'arrête dès qu'on interagit.
+     ══════════════════════════════════════════════════════════ */
+  (function(){
+    var piste = document.getElementById('carr-piste');
+    if(!piste) return;
+    var vue   = document.getElementById('carr-vue');
+    var pts   = document.getElementById('carr-pts');
+    var items = piste.children, n = items.length;
+    var i = 0, auto = null, calme = document.documentElement.classList.contains('no-motion');
+
+    for(var k = 0; k < n; k++){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'carr-pt';
+      b.setAttribute('aria-label', 'Réalisation ' + (k + 1));
+      (function(j){ b.addEventListener('click', function(){ stop(); aller(j); }); })(k);
+      pts.appendChild(b);
+    }
+
+    function aller(j){
+      i = (j + n) % n;
+      piste.style.transform = 'translateX(' + (-i * 100) + '%)';
+      for(var k = 0; k < n; k++) pts.children[k].classList.toggle('on', k === i);
+    }
+    function suivant(){ aller(i + 1); }
+    function precedent(){ aller(i - 1); }
+
+    document.getElementById('carr-next').addEventListener('click', function(){ stop(); suivant(); });
+    document.getElementById('carr-prev').addEventListener('click', function(){ stop(); precedent(); });
+
+    /* clavier : on ne pilote que si le carrousel est à l'écran */
+    document.addEventListener('keydown', function(e){
+      if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      var r = vue.getBoundingClientRect();
+      if(r.bottom < 80 || r.top > window.innerHeight - 80) return;
+      stop(); (e.key === 'ArrowRight' ? suivant : precedent)();
+    });
+
+    /* glissement : même code pour le doigt et la souris */
+    var x0 = null, dx = 0;
+    function debut(x){ x0 = x; dx = 0; piste.style.transition = 'none'; stop(); }
+    function bouge(x){
+      if(x0 === null) return;
+      dx = x - x0;
+      piste.style.transform = 'translateX(calc(' + (-i * 100) + '% + ' + dx + 'px))';
+    }
+    function fin(){
+      if(x0 === null) return;
+      piste.style.transition = '';
+      var seuil = Math.min(90, vue.clientWidth * 0.16);
+      if(dx < -seuil) suivant(); else if(dx > seuil) precedent(); else aller(i);
+      x0 = null; dx = 0;
+    }
+    vue.addEventListener('touchstart', function(e){ debut(e.touches[0].clientX); }, { passive:true });
+    vue.addEventListener('touchmove',  function(e){ bouge(e.touches[0].clientX); }, { passive:true });
+    vue.addEventListener('touchend', fin);
+    vue.addEventListener('mousedown', function(e){ e.preventDefault(); debut(e.clientX); });
+    window.addEventListener('mousemove', function(e){ if(x0 !== null) bouge(e.clientX); });
+    window.addEventListener('mouseup', fin);
+    vue.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+    function demarrer(){
+      if(calme || auto) return;
+      auto = setInterval(function(){ if(!document.hidden) suivant(); }, 6000);
+    }
+    function stop(){ if(auto){ clearInterval(auto); auto = null; } }
+
+    /* il ne tourne que lorsqu'il est visible, et jamais après une interaction */
+    aller(0);
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(en){
+        if(en[0].isIntersecting) demarrer(); else stop();
+      }, { threshold:0.4 }).observe(vue);
+    } else { demarrer(); }
+    vue.addEventListener('mouseenter', stop);
   })();
 
   /* ---- messages temporaires ---- */
